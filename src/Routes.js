@@ -35,13 +35,13 @@ export default function Routes({ appProps }) {
         appProps={appProps}
       />
       <AuthenticatedRoute
-        path="/notes/new"
+        path="/certs/new"
         exact
         component={NewNote}
         appProps={appProps}
       />
       <AuthenticatedRoute
-        path="/notes/:id"
+        path="/certs/:id"
         exact
         component={Notes}
         appProps={appProps}

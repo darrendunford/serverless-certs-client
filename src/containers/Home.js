@@ -10,7 +10,7 @@ import selectNotes from "../selectors/notes";
 import { Link } from "react-router-dom";
 
 export default function Home(props) {
-  const [notes, setNotes] = useState([]);
+  const [certs, setCerts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageloading, setPageLoading] = useState(true);
   const [filter, setFilter] = useState("");
@@ -22,8 +22,8 @@ export default function Home(props) {
       }
 
       try {
-        const notes = await loadNotes();
-        setNotes(notes);
+        const certs = await loadNotes();
+        setCerts(certs);
       } catch (e) {
         alert(e);
       }
@@ -40,22 +40,22 @@ export default function Home(props) {
   }
 
   function loadNotes() {
-    return API.get("notes", "/notes");
+    return API.get("certs", "/certs");
   }
 
-  function renderNotesList(notes) {
-    return [{}].concat(notes).map((note, i) =>
+  function renderNotesList(certs) {
+    return [{}].concat(certs).map((cert, i) =>
       i !== 0 ? (
-        <LinkContainer key={note.noteId} to={`/notes/${note.noteId}`}>
-          <ListGroupItem header={note.content.trim().split("\n")[0]}>
-            {"Created: " + new Date(note.createdAt).toLocaleString()}
+        <LinkContainer key={cert.certId} to={`/certs/${cert.certId}`}>
+          <ListGroupItem header={cert.content.trim().split("\n")[0]}>
+            {"Created: " + new Date(cert.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
       ) : (
-        <LinkContainer key="new" to="/notes/new">
+        <LinkContainer key="new" to="/certs/new">
           <ListGroupItem>
             <h4>
-              <b>{"\uFF0B"}</b> Create a new note
+              <b>{"\uFF0B"}</b> Add a new certification
             </h4>
           </ListGroupItem>
         </LinkContainer>
@@ -87,12 +87,12 @@ export default function Home(props) {
           <img className="center small-loader" src={loader} alt="Loader" />
         ) : (
           <div>
-            <PageHeader>Your Notes</PageHeader>
+            <PageHeader>Your Certifications</PageHeader>
             <NoteListFilter filter={filter} onChange={handleTextChange} />
-            <Summary notes={selectNotes(notes, { text: filter })} />
+            <Summary notes={selectNotes(certs, { text: filter })} />
             <ListGroup>
               {!isLoading &&
-                renderNotesList(selectNotes(notes, { text: filter }))}
+                renderNotesList(selectNotes(certs, { text: filter }))}
             </ListGroup>
           </div>
         )}

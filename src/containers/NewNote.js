@@ -52,14 +52,31 @@ export default function NewNote(props) {
   return (
     <div className="NewNote">
       <form onSubmit={handleSubmit}>
+        <FormGroup controlId="vendor">
+          <ControlLabel>Vendor</ControlLabel>
+          <FormControl componentClass="select" placeholder="select">
+            <option value="AWS">AWS</option>
+            <option value="GCP">GCP</option>
+            <option value="Azure">Azure</option>
+          </FormControl>
+        </FormGroup>
+        <FormGroup controlId="level">
+          <ControlLabel>Level</ControlLabel>
+          <FormControl componentClass="select" placeholder="select">
+            <option value="Foundation">Foundation</option>
+            <option value="Associate">Associate</option>
+            <option value="Professional">Professional</option>
+          </FormControl>
+        </FormGroup>
         <FormGroup controlId="content">
           <ControlLabel>Certification Name</ControlLabel>
           <FormControl
             value={content}
-            componentClass="text"
+            type="text"
             onChange={e => setContent(e.target.value)}
           />
         </FormGroup>
+
         <FormGroup controlId="file">
           <ControlLabel>Attachment</ControlLabel>
           <FormControl onChange={handleFileChange} type="file" />

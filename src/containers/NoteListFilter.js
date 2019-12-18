@@ -9,7 +9,7 @@ const NoteListFilter = props => {
   }
   return (
     <div>
-      <div class="content-container">
+      <div className="content-container">
         <FormGroup
           bsSize="large"
           type="text"
