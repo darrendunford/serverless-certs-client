@@ -6,6 +6,7 @@ import { s3Upload } from "../libs/awsLib";
 import config from "../config";
 import "./Certs.css";
 import loader from "../images/loader.gif";
+import { ConsoleLogger } from "@aws-amplify/core";
 
 export default function Certs(props) {
   const file = useRef(null);
@@ -78,6 +79,8 @@ export default function Certs(props) {
       if (file.current) {
         attachment = await s3Upload(file.current);
       }
+
+      console.log(certName);
 
       await saveCert({
         certName,

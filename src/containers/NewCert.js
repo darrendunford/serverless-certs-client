@@ -9,8 +9,8 @@ import { s3Upload } from "../libs/awsLib";
 export default function NewCert(props) {
   const file = useRef(null);
   const [certName, setCertName] = useState("");
-  const [vendor, setVendor] = useState("");
-  const [level, setLevel] = useState("");
+  const [vendor, setVendor] = useState("AWS");
+  const [level, setLevel] = useState("Foundation");
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
