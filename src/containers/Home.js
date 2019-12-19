@@ -7,6 +7,9 @@ import Summary from "./Summary";
 import CertListFilter from "./CertListFilter";
 import loader from "../images/loader.gif";
 import selectCerts from "../selectors/certs";
+import AWS from "../images/aws.png";
+import GCP from "../images/gcp.png";
+import Azure from "../images/azure.png";
 import { Link } from "react-router-dom";
 
 export default function Home(props) {
@@ -48,6 +51,22 @@ export default function Home(props) {
       i !== 0 ? (
         <LinkContainer key={cert.certId} to={`/certs/${cert.certId}`}>
           <ListGroupItem header={cert.certName.trim().split("\n")[0]}>
+            <img
+              className="vendorIcon"
+              src={(() => {
+                switch (cert.vendor) {
+                  case "AWS":
+                    return AWS;
+                  case "GCP":
+                    return GCP;
+                  case "Azure":
+                    return Azure;
+                  default:
+                    return null;
+                }
+              })()}
+              alt="vendor-icon"
+            />
             {"Created: " + new Date(cert.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
