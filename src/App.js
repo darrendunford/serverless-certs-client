@@ -41,7 +41,7 @@ function App(props) {
         <Navbar fluid collapseOnSelect>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">Scratch</Link>
+              <Link to="/">SD&E Cloud Certifications Tracker</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
@@ -49,9 +49,9 @@ function App(props) {
             <Nav pullRight>
               {isAuthenticated ? (
                 <>
-                  <LinkContainer to="/settings">
+                  {/* <LinkContainer to="/settings">
                     <NavItem>Settings</NavItem>
-                  </LinkContainer>
+                  </LinkContainer> */}
                   <NavItem onClick={handleLogout}>Logout</NavItem>
                 </>
               ) : (

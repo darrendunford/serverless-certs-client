@@ -5,8 +5,8 @@ import NotFound from "./containers/NotFound";
 import Login from "./containers/Login";
 import AppliedRoute from "./components/AppliedRoute";
 import Signup from "./containers/Signup";
-import NewNote from "./containers/NewNote";
-import Notes from "./containers/Notes";
+import NewCert from "./containers/NewCert";
+import Certs from "./containers/Certs";
 import Settings from "./containers/Settings";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
@@ -37,13 +37,13 @@ export default function Routes({ appProps }) {
       <AuthenticatedRoute
         path="/certs/new"
         exact
-        component={NewNote}
+        component={NewCert}
         appProps={appProps}
       />
       <AuthenticatedRoute
         path="/certs/:id"
         exact
-        component={Notes}
+        component={Certs}
         appProps={appProps}
       />
 

@@ -3,7 +3,7 @@ import React from "react";
 const Summary = props => {
   return (
     <div>
-      <p>Displaying {props.notes.length} notes.</p>
+      <p>Displaying {props.certs.length} certifications.</p>
     </div>
   );
 };

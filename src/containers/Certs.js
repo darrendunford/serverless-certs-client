@@ -4,34 +4,34 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { s3Upload } from "../libs/awsLib";
 import config from "../config";
-import "./Notes.css";
+import "./Certs.css";
 import loader from "../images/loader.gif";
 
-export default function Notes(props) {
+export default function Certs(props) {
   const file = useRef(null);
-  const [note, setNote] = useState(null);
-  const [content, setContent] = useState("");
+  const [cert, setCert] = useState(null);
+  const [certName, setCertName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [pageloading, setPageLoading] = useState(true);
 
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    function loadNote() {
-      return API.get("notes", `/notes/${props.match.params.id}`);
+    function loadCert() {
+      return API.get("certs", `/certs/${props.match.params.id}`);
     }
 
     async function onLoad() {
       try {
-        const note = await loadNote();
-        const { content, attachment } = note;
+        const cert = await loadCert();
+        const { certName, attachment } = cert;
 
         if (attachment) {
-          note.attachmentURL = await Storage.vault.get(attachment);
+          cert.attachmentURL = await Storage.vault.get(attachment);
         }
 
-        setContent(content);
-        setNote(note);
+        setCertName(certName);
+        setCert(cert);
         setPageLoading(false);
       } catch (e) {
         alert(e);
@@ -42,7 +42,7 @@ export default function Notes(props) {
   }, [props.match.params.id]);
 
   function validateForm() {
-    return content.length > 0;
+    return certName.length > 0;
   }
 
   function formatFilename(str) {
@@ -53,9 +53,9 @@ export default function Notes(props) {
     file.current = event.target.files[0];
   }
 
-  function saveNote(note) {
-    return API.put("notes", `/notes/${props.match.params.id}`, {
-      body: note
+  function saveCert(cert) {
+    return API.put("certs", `/certs/${props.match.params.id}`, {
+      body: cert
     });
   }
 
@@ -79,9 +79,9 @@ export default function Notes(props) {
         attachment = await s3Upload(file.current);
       }
 
-      await saveNote({
-        content,
-        attachment: attachment || note.attachment
+      await saveCert({
+        certName,
+        attachment: attachment || cert.attachment
       });
       props.history.push("/");
     } catch (e) {
@@ -90,15 +90,15 @@ export default function Notes(props) {
     }
   }
 
-  function deleteNote() {
-    return API.del("notes", `/notes/${props.match.params.id}`);
+  function deleteCert() {
+    return API.del("certs", `/certs/${props.match.params.id}`);
   }
 
   async function handleDelete(event) {
     event.preventDefault();
 
     const confirmed = window.confirm(
-      "Are you sure you want to delete this note?"
+      "Are you sure you want to delete this certification?"
     );
 
     if (!confirmed) {
@@ -108,7 +108,7 @@ export default function Notes(props) {
     setIsDeleting(true);
 
     try {
-      await deleteNote();
+      await deleteCert();
       props.history.push("/");
     } catch (e) {
       alert(e);
@@ -121,32 +121,33 @@ export default function Notes(props) {
       {pageloading ? (
         <img className="center small-loader" src={loader} alt="Loader" />
       ) : (
-        <div className="Notes">
-          {note && (
+        <div className="Certs">
+          {cert && (
             <form onSubmit={handleSubmit}>
-              <FormGroup controlId="content">
+              <FormGroup controlId="certName">
+                <ControlLabel>Certification Name</ControlLabel>
                 <FormControl
-                  value={content}
-                  componentClass="textarea"
-                  onChange={e => setContent(e.target.value)}
+                  value={certName}
+                  type="text"
+                  onChange={e => setCertName(e.target.value)}
                 />
               </FormGroup>
-              {note.attachment && (
+              {cert.attachment && (
                 <FormGroup>
                   <ControlLabel>Attachment</ControlLabel>
                   <FormControl.Static>
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href={note.attachmentURL}
+                      href={cert.attachmentURL}
                     >
-                      {formatFilename(note.attachment)}
+                      {formatFilename(cert.attachment)}
                     </a>
                   </FormControl.Static>
                 </FormGroup>
               )}
               <FormGroup controlId="file">
-                {!note.attachment && <ControlLabel>Attachment</ControlLabel>}
+                {!cert.attachment && <ControlLabel>Attachment</ControlLabel>}
                 <FormControl onChange={handleFileChange} type="file" />
               </FormGroup>
               <LoaderButton

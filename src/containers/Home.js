@@ -4,9 +4,9 @@ import { API } from "aws-amplify";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Summary from "./Summary";
-import NoteListFilter from "./NoteListFilter";
+import CertListFilter from "./CertListFilter";
 import loader from "../images/loader.gif";
-import selectNotes from "../selectors/notes";
+import selectCerts from "../selectors/certs";
 import { Link } from "react-router-dom";
 
 export default function Home(props) {
@@ -22,7 +22,7 @@ export default function Home(props) {
       }
 
       try {
-        const certs = await loadNotes();
+        const certs = await loadCerts();
         setCerts(certs);
       } catch (e) {
         alert(e);
@@ -39,15 +39,15 @@ export default function Home(props) {
     setFilter(text);
   }
 
-  function loadNotes() {
+  function loadCerts() {
     return API.get("certs", "/certs");
   }
 
-  function renderNotesList(certs) {
+  function renderCertsList(certs) {
     return [{}].concat(certs).map((cert, i) =>
       i !== 0 ? (
         <LinkContainer key={cert.certId} to={`/certs/${cert.certId}`}>
-          <ListGroupItem header={cert.content.trim().split("\n")[0]}>
+          <ListGroupItem header={cert.certName.trim().split("\n")[0]}>
             {"Created: " + new Date(cert.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
@@ -66,7 +66,7 @@ export default function Home(props) {
   function renderLander() {
     return (
       <div className="lander">
-        <h1>SD&E Certs Tracker</h1>
+        <h1>SD&E Cloud Certifications Tracker</h1>
         <p>A cloud certications tracker app</p>
         <div>
           <Link to="/login" className="btn btn-info btn-lg">
@@ -80,19 +80,19 @@ export default function Home(props) {
     );
   }
 
-  function renderNotes() {
+  function renderCerts() {
     return (
-      <div className="notes">
+      <div className="certs">
         {pageloading ? (
           <img className="center small-loader" src={loader} alt="Loader" />
         ) : (
           <div>
             <PageHeader>Your Certifications</PageHeader>
-            <NoteListFilter filter={filter} onChange={handleTextChange} />
-            <Summary notes={selectNotes(certs, { text: filter })} />
+            <CertListFilter filter={filter} onChange={handleTextChange} />
+            <Summary certs={selectCerts(certs, { text: filter })} />
             <ListGroup>
               {!isLoading &&
-                renderNotesList(selectNotes(certs, { text: filter }))}
+                renderCertsList(selectCerts(certs, { text: filter }))}
             </ListGroup>
           </div>
         )}
@@ -102,7 +102,7 @@ export default function Home(props) {
 
   return (
     <div className="Home">
-      {props.isAuthenticated ? renderNotes() : renderLander()}
+      {props.isAuthenticated ? renderCerts() : renderLander()}
     </div>
   );
 }

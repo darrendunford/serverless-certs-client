@@ -1,8 +1,8 @@
 import React from "react";
-import "./NoteListFilter.css";
+import "./CertListFilter.css";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-const NoteListFilter = props => {
+const CertListFilter = props => {
   function handleChange(e) {
     // Here, we invoke the callback with the new value
     props.onChange(e.target.value);
@@ -13,11 +13,11 @@ const NoteListFilter = props => {
         <FormGroup
           bsSize="large"
           type="text"
-          placeholder="Search notes"
+          placeholder="Search certifications"
           value={props.value}
           onChange={handleChange}
         >
-          <ControlLabel>Search Notes</ControlLabel>
+          <ControlLabel>Search Certifications</ControlLabel>
           <FormControl autoFocus />
         </FormGroup>
       </div>
@@ -25,4 +25,4 @@ const NoteListFilter = props => {
   );
 };
 
-export default NoteListFilter;
+export default CertListFilter;

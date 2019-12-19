@@ -2,17 +2,19 @@ import React, { useRef, useState } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
-import "./NewNote.css";
+import "./NewCert.css";
 import { API } from "aws-amplify";
 import { s3Upload } from "../libs/awsLib";
 
-export default function NewNote(props) {
+export default function NewCert(props) {
   const file = useRef(null);
-  const [content, setContent] = useState("");
+  const [certName, setCertName] = useState("");
+  const [vendor, setVendor] = useState("");
+  const [level, setLevel] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
-    return content.length > 0;
+    return certName.length > 0;
   }
 
   function handleFileChange(event) {
@@ -35,7 +37,7 @@ export default function NewNote(props) {
     try {
       const attachment = file.current ? await s3Upload(file.current) : null;
 
-      await createNote({ content, attachment });
+      await createCert({ certName, vendor, level, attachment });
       props.history.push("/");
     } catch (e) {
       alert(e);
@@ -43,18 +45,22 @@ export default function NewNote(props) {
     }
   }
 
-  function createNote(note) {
-    return API.post("notes", "/notes", {
-      body: note
+  function createCert(cert) {
+    return API.post("certs", "/certs", {
+      body: cert
     });
   }
 
   return (
-    <div className="NewNote">
+    <div className="NewCert">
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="vendor">
           <ControlLabel>Vendor</ControlLabel>
-          <FormControl componentClass="select" placeholder="select">
+          <FormControl
+            componentClass="select"
+            placeholder="select"
+            onChange={e => setVendor(e.target.value)}
+          >
             <option value="AWS">AWS</option>
             <option value="GCP">GCP</option>
             <option value="Azure">Azure</option>
@@ -62,18 +68,22 @@ export default function NewNote(props) {
         </FormGroup>
         <FormGroup controlId="level">
           <ControlLabel>Level</ControlLabel>
-          <FormControl componentClass="select" placeholder="select">
+          <FormControl
+            componentClass="select"
+            placeholder="select"
+            onChange={e => setLevel(e.target.value)}
+          >
             <option value="Foundation">Foundation</option>
             <option value="Associate">Associate</option>
             <option value="Professional">Professional</option>
           </FormControl>
         </FormGroup>
-        <FormGroup controlId="content">
+        <FormGroup controlId="certName">
           <ControlLabel>Certification Name</ControlLabel>
           <FormControl
-            value={content}
+            value={certName}
             type="text"
-            onChange={e => setContent(e.target.value)}
+            onChange={e => setCertName(e.target.value)}
           />
         </FormGroup>
 
