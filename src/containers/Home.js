@@ -66,15 +66,19 @@ export default function Home(props) {
   function renderLander() {
     return (
       <div className="lander">
-        <h1>SD&E Cloud Certifications Tracker</h1>
-        <p>A cloud certications tracker app</p>
-        <div>
-          <Link to="/login" className="btn btn-info btn-lg">
-            Login
-          </Link>
-          <Link to="/signup" className="btn btn-success btn-lg">
-            Signup
-          </Link>
+        <div className="dark-overlay">
+          <div className="landing-inner">
+            <h1>SD&E Cloud Certifications Tracker</h1>
+            <p>A cloud certications tracker app</p>
+            <div>
+              <Link to="/login" className="btn btn-info btn-lg">
+                Login
+              </Link>
+              <Link to="/signup" className="btn btn-success btn-lg">
+                Signup
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     );
