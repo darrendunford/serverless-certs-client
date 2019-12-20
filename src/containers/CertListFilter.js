@@ -13,11 +13,11 @@ const CertListFilter = props => {
         <FormGroup
           bsSize="large"
           type="text"
-          placeholder="Search certifications"
+          placeholder="Search certifications by name"
           value={props.value}
           onChange={handleChange}
         >
-          <ControlLabel>Search Certifications</ControlLabel>
+          <ControlLabel>Search Certifications By Name</ControlLabel>
           <FormControl autoFocus />
         </FormGroup>
       </div>
