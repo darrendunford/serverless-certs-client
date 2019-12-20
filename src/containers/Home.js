@@ -50,7 +50,11 @@ export default function Home(props) {
     return [{}].concat(certs).map((cert, i) =>
       i !== 0 ? (
         <LinkContainer key={cert.certId} to={`/certs/${cert.certId}`}>
-          <ListGroupItem header={cert.certName.trim().split("\n")[0]}>
+          <ListGroupItem
+            header={`${cert.vendor} - ${cert.level} - ${
+              cert.certName.trim().split("\n")[0]
+            }`}
+          >
             <img
               className="vendorIcon"
               src={(() => {

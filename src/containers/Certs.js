@@ -80,8 +80,6 @@ export default function Certs(props) {
         attachment = await s3Upload(file.current);
       }
 
-      console.log(certName);
-
       await saveCert({
         certName,
         attachment: attachment || cert.attachment

@@ -67,3 +67,12 @@
 .Home .lander div a:first-child {
   margin-right: 20px;
 }
+
+.cert-divLeft {
+  display: block;
+  float: left;
+}
+.cert-divRight {
+  display: block;
+  float: right;
+}
