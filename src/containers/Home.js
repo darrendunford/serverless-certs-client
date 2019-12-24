@@ -16,7 +16,10 @@ export default function Home(props) {
   const [certs, setCerts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pageloading, setPageLoading] = useState(true);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState({
+    text: "",
+    searchBy: "certName"
+  });
 
   useEffect(() => {
     async function onLoad() {
@@ -39,8 +42,16 @@ export default function Home(props) {
   }, [props.isAuthenticated]);
 
   function handleTextChange(text) {
-    setFilter(text);
+    setFilter({ ...filter, text });
   }
+
+  function handleSearchByChange(searchBy) {
+    setFilter({ ...filter, searchBy });
+  }
+
+  useEffect(() => {
+    console.log(filter);
+  }, [filter]);
 
   function loadCerts() {
     return API.get("certs", "/certs");
@@ -115,11 +126,13 @@ export default function Home(props) {
         ) : (
           <div>
             <PageHeader>Your Certifications</PageHeader>
-            <CertListFilter filter={filter} onChange={handleTextChange} />
-            <Summary certs={selectCerts(certs, { text: filter })} />
+            <CertListFilter
+              onTextChange={handleTextChange}
+              onSearchByChange={handleSearchByChange}
+            />
+            <Summary certs={selectCerts(certs, filter)} />
             <ListGroup>
-              {!isLoading &&
-                renderCertsList(selectCerts(certs, { text: filter }))}
+              {!isLoading && renderCertsList(selectCerts(certs, filter))}
             </ListGroup>
           </div>
         )}
