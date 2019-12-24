@@ -49,10 +49,6 @@ export default function Home(props) {
     setFilter({ ...filter, searchBy });
   }
 
-  useEffect(() => {
-    console.log(filter);
-  }, [filter]);
-
   function loadCerts() {
     return API.get("certs", "/certs");
   }

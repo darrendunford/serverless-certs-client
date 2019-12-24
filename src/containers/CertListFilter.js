@@ -15,19 +15,18 @@ const CertListFilter = props => {
 
   return (
     <div>
+      <p>Search Certification</p>
       <div className="content-container">
         <FormGroup
-          bsSize="large"
           type="text"
           placeholder="Search certifications by name"
           name="text"
           onChange={handleTextChange}
+          className="input-group__item"
         >
-          <ControlLabel>Search Certifications</ControlLabel>
           <FormControl autoFocus />
         </FormGroup>
-        <FormGroup>
-          <ControlLabel>Search By</ControlLabel>
+        <FormGroup className="input-group__item">
           <FormControl
             componentClass="select"
             placeholder="certName"
